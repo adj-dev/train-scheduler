@@ -1,4 +1,8 @@
-// Configuration settings for Firebase web app
+/*
+FIREBASE SET-UP AND CONFIG
+*/
+
+// Configuration settings for Firebase
 var firebaseConfig = {
   apiKey: "AIzaSyDSimHBXQdwog6DHsSVsN4hfHl-GmNyyhw",
   authDomain: "coding-bootcamp-mn.firebaseapp.com",
@@ -10,8 +14,12 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-
+// Access database
 const database = firebase.database();
+
+/*
+DECLARE AND DEFINE GLOBAL FUNCTIONS
+*/
 
 // Convert 24 hour time to 12-hour time
 function convertTime(t) {
@@ -60,6 +68,24 @@ function calculateTime(initial, frequency) {
   return { nextTrain, minutesAway };
 }
 
+/*
+SET-UP EVENT LISTENERS
+
+The callback functions on the event listeners are what
+sets everything in m~o~t~i~o~n. 
+
+Once a user clicks on the "submit"
+button all input values are captured and sent to Firebase as a 
+new child of the root directory. 
+
+Then, as if conjured by a wizard, the .on() method attached to 
+the database object is cast and the chain reaction of function
+calls ensues. Awesomely, this particular callback runs once
+for every child in the root directory when the app is initialized. 
+This results in all stored data being rendered onto the DOM when 
+the application is initially loaded, and afterwards calling 
+only once for each new child.
+*/
 
 // Form submit handler
 $(document).on('click', '#submit', e => {
@@ -83,7 +109,7 @@ $(document).on('click', '#submit', e => {
 });
 
 
-// Set event listener for new entries on database
+// Set event listener for new entries on database ( wizard stuff )
 database.ref().on('child_added', snapshot => {
   $('#train-data').append(convertToHTML(snapshot.val()));
 });
