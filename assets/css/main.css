@@ -2,6 +2,11 @@
 /*-----------------------CONTAINER-----------------------*/
 /*-------------------------------------------------------*/
 
+body {
+  padding-top: 40px;
+  background-color: #dceff7;
+}
+
 .container {
   background: rgb(205,226,233);
   background: -moz-linear-gradient(180deg, rgba(205,226,233,1) 0%, rgba(90,135,164,1) 100%);
@@ -9,6 +14,7 @@
   background: linear-gradient(180deg, rgba(205,226,233,1) 0%, rgba(90,135,164,1) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#cde2e9",endColorstr="#5a87a4",GradientType=1);
   padding: 20px;
+  border-radius: 4px;
 }
 
 /*-------------------------------------------------------*/
