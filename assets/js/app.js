@@ -39,7 +39,7 @@ function convertTime(t) {
   }
 
   return convertedTime;
-}
+};
 
 
 // Convert train object to "html"
@@ -66,7 +66,66 @@ function calculateTime(initial, frequency) {
   let nextTrain = moment().add(minutesAway, "minutes").format('HH:mm');
 
   return { nextTrain, minutesAway };
-}
+};
+
+// Perform basic form validation
+function formValidation(input) {
+  // Collect input data via object destructuring
+  let { trainName, destination, firstTrainTime, frequency } = input;
+
+  // Check for empty train input
+  if (trainName === '') {
+    $('#name').addClass('error');
+    $('#train-name').attr('placeholder', 'Please enter a train name');
+    return false;
+  }
+
+  // Removes error class if input is corrected
+  if (trainName !== '') {
+    $('#name').removeClass('error');
+  }
+
+  // Check for empty destination input
+  if (destination === '') {
+    $('#dest').addClass('error');
+    $('#destination').attr('placeholder', 'Please enter a destination');
+    return false;
+  }
+
+  // Removes error class if input is corrected
+  if (destination !== '') {
+    $('#dest').removeClass('error');
+  }
+
+  // Check for valid 24-hour time via RegEx
+  if (!firstTrainTime.match(/^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/gm)) {
+    $('#time').addClass('error');
+    $('#first-train-time').attr('placeholder', 'Please enter a valid initial train time');
+    return false;
+  }
+
+  // Removes error class if input is corrected
+  if (firstTrainTime.match(/^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/gm)) {
+    $('#time').removeClass('error');
+  }
+
+  // Check for valid frequency via ensuring entry is a number
+  // I acknowledge that an unrealistic value could make it through
+  // but I'll save that task for a rainy day. 
+  if (!parseInt(frequency)) {
+    $('#freq').addClass('error');
+    $('#frequency').attr('placeholder', 'Please enter a frequency');
+    return false;
+  }
+
+  // Removes error class if input is corrected
+  if (parseInt(frequency)) {
+    $('#freq').removeClass('error');
+  }
+
+  // If form is valid return true and get the ball rollin'
+  return true;
+};
 
 /*
 SET-UP EVENT LISTENERS
@@ -104,12 +163,20 @@ $(document).on('click', '#submit', e => {
     frequency
   };
 
+  let validated = formValidation(trainData);
+
   // Send values to Firebase
-  database.ref().push(trainData);
+  if (validated) {
+    database.ref().push(trainData);
+  }
 });
 
 
 // Set event listener for new entries on database ( wizard stuff )
 database.ref().on('child_added', snapshot => {
   $('#train-data').append(convertToHTML(snapshot.val()));
+}, error => {
+  if (error) {
+    console.log(error);
+  }
 });

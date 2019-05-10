@@ -43,23 +43,23 @@
 
     <!-- form that submits data to Firebase -->
     <form class="ui form">
-      <div class="field">
+      <div class="field" id="name">
         <label>Train Name</label>
         <input class="dark" id="train-name" type="text" name="train-name" placeholder="Train Name">
       </div>
-      <div class="field">
+      <div class="field" id="dest">
         <label>Destination</label>
         <input class="dark" id="destination" type="text" name="destination" placeholder="Destination">
       </div>
-      <div class="field">
+      <div class="field" id="time">
         <label>First Train Time (24-hour format)</label>
         <input class="dark" id="first-train-time" type="text" name="first-train-time" placeholder="00:00">
       </div>
-      <div class="field">
+      <div class="field" id="freq">
         <label>Frequency (min)</label>
         <input class="dark" id="frequency" type="text" name="frequency" placeholder="30">
       </div>
-      <button class="ui button" id="submit" type="submit">Submit</button>
+      <button class="ui button" id="submit" type="submit">Add Train</button>
     </form>
   </div>
 
