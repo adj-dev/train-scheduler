@@ -174,6 +174,9 @@ $(document).on('click', '#submit', e => {
 
 // Set event listener for new entries on database ( wizard stuff )
 database.ref().on('child_added', snapshot => {
+  // Hide the "Add a train to schedule it..." message once a train is scheduled
+  $('#add-train').css('display', 'none');
+  // Append train data to table
   $('#train-data').append(convertToHTML(snapshot.val()));
 }, error => {
   if (error) {
